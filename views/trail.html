@@ -1,0 +1,35 @@
+<!--main_content-->
+{% extends "_base.html" %} {% block content %}
+
+<article>
+  <header>
+    <h4>{{ title }}</h4>
+    <small>{{ region_name }}</small><br />
+    <small>{{ region_country }}</small>
+  </header>
+
+  <div class="trail__content">
+    <div class="trail__img">
+      {% if image_url %}
+      <img src="{{ image_url }}" alt="{{ title }}" />
+      {% endif %}
+    </div>
+
+    <div class="trail__description">
+      <div>{{ description | safe}}</div>
+      <p>Added: {{ data }}</p>
+    </div>
+  </div>
+  <footer>
+    {% if difficulty == "easy" %}
+    <span class="difficulty easy">easy</span>
+    {% elif difficulty == "moderate" %}
+    <span class="difficulty moderate">moderate</span>
+    {% else %}
+    <span class="difficulty hard">hard</span>
+    {% endif %}
+    <span>{{ distance_km }} km</span>
+  </footer>
+</article>
+
+{% endblock content %}

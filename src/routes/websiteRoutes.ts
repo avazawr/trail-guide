@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { getTrails } from "../controllers/trailController";
+import { getTrailPageBySlug, getTrails } from "../controllers/trailController";
 
 const router = Router();
 
 router.get("/", getTrails);
+router.get("/trails/:slug", getTrailPageBySlug);
 
 export default router;

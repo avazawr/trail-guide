@@ -44,3 +44,16 @@ article footer {
   background-color: #fee2e2;
   color: #991b1b;
 }
+
+.trail__img {
+  float: left;
+  width: 30%;
+}
+.trail__description {
+  margin-left: 35%;
+}
+
+.trail__content {
+  overflow: hidden;
+  padding-bottom: 20px;
+}

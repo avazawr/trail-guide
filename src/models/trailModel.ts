@@ -38,6 +38,17 @@ export async function getAllTrails(): Promise<TrailWithRegion[]> {
 }
 
 // Get one Trail joined with region by slug
-export async function getTrailBySlug(slug: string) {
+export async function getTrailBySlug(
+  slug: string,
+): Promise<TrailWithRegion | undefined> {
   const db = getDB();
+  return db.get<TrailWithRegion>(
+    `SELECT trails.*,
+            regions.name AS region_name,
+            regions.country AS region_country
+     FROM trails
+     LEFT JOIN regions ON trails.region_id = regions.id
+     WHERE trails.slug = ?`,
+    [slug],
+  );
 }
