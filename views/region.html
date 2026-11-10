@@ -1,0 +1,10 @@
+<!--main_content-->
+{% extends "_base.html" %} {% block content %}
+<h1>{{region.name}} , <small>{{ region.country }}</small></h1>
+
+<p>{{ region.description | safe}}</p>
+
+<div class="grid">
+  {% for trail in trails %} {% include "macros/trailCard.html" %} {% endfor %}
+</div>
+{% endblock content %}

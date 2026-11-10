@@ -1,13 +1,5 @@
 import { getDB } from "./db";
 
-export interface Region {
-  id: number;
-  name: string;
-  slug: string;
-  country: string;
-  description?: string;
-}
-
 export interface Trail {
   id: number;
   region_id: number;
@@ -50,5 +42,21 @@ export async function getTrailBySlug(
      LEFT JOIN regions ON trails.region_id = regions.id
      WHERE trails.slug = ?`,
     [slug],
+  );
+}
+
+// Get all Trails from the Region
+export async function getTrailsByRegionId(
+  regionId: number,
+): Promise<TrailWithRegion[]> {
+  const db = getDB();
+  return db.all<TrailWithRegion[]>(
+    `SELECT 
+      trails.*, regions.name AS region_name, regions.country AS region_country 
+    FROM trails 
+    LEFT JOIN regions ON trails.region_id = regions.id 
+    WHERE trails.region_id = ?
+    ORDER BY trails.created_at DESC`,
+    [regionId],
   );
 }

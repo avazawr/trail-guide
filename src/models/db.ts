@@ -1,6 +1,5 @@
 import { open, Database } from "sqlite";
 import sqlite3 from "sqlite3";
-import path from "path";
 
 const DB_PATH = process.env.DB_PATH;
 
