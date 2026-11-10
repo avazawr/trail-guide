@@ -1,0 +1,22 @@
+<article>
+  <header>
+    <h4>
+      <a href="/trails/{{ trail.slug }}">{{ trail.title }}</a>
+    </h4>
+    <small>{{ trail.region_name }}</small><br />
+    <small>{{ trail.region_country }}</small>
+  </header>
+
+  <div>{{ trail.description | safe}}</div>
+
+  <footer>
+    {% if trail.difficulty == "easy" %}
+    <span class="difficulty easy">easy</span>
+    {% elif trail.difficulty == "moderate" %}
+    <span class="difficulty moderate">moderate</span>
+    {% else %}
+    <span class="difficulty hard">hard</span>
+    {% endif %}
+    <span>{{ trail.distance_km }} km</span>
+  </footer>
+</article>

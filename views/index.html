@@ -1,0 +1,8 @@
+<!--main_content-->
+{% extends "_base.html" %} {% block content %}
+
+<div class="grid">
+  {% for trail in trails %} {% include "macros/trailCard.html" %} {% endfor %}
+</div>
+
+{% endblock content %}

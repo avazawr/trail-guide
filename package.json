@@ -18,6 +18,7 @@
     "typescript": "^7"
   },
   "dependencies": {
+    "chokidar": "^6.0.0",
     "dev": "^0.1.5",
     "express": "^5.3.0",
     "nunjucks": "^3.2.4",
