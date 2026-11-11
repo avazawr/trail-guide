@@ -4,14 +4,19 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { closeDB, connectDB } from "./models/db";
 
+import { ensureLogFile, logger } from "./middleware/logger";
+
 import websiteRouter from "./routes/websiteRoutes";
+import adminRouters from "./routes/adminRoutes";
 
 // Define path
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, "..");
 const assetsDir = path.join(projectRoot, "src", "assets");
-const cssDir = path.join(projectRoot, "src", "css");
+// Logger
+const LOG_DIR = path.join(projectRoot, "logs");
+const LOG_FILE = path.join(LOG_DIR, "access.log");
 
 const app = express();
 
@@ -25,10 +30,14 @@ nunjucks.configure(path.join(projectRoot, "views"), {
   watch: true,
 });
 
+// Logger
+await ensureLogFile(LOG_FILE);
+app.use(logger);
+
 // Website routers
 app.use("/", websiteRouter);
 // Admin routers
-//
+app.use("/", adminRouters);
 // API routers
 //
 

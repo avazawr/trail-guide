@@ -1,0 +1,12 @@
+<!--main_content-->
+{% extends "_base.html" %} {% block mainheader %} Admin panel {% endblock
+mainheader %} {% block content %}
+<table>
+  {% for trail in trails %}
+  <tr>
+    {% include "macros/trailCardAdmin.html" %}
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock content %}

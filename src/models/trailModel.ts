@@ -60,3 +60,10 @@ export async function getTrailsByRegionId(
     [regionId],
   );
 }
+
+// Delete Trail
+export async function deleteTrail(id: number): Promise<boolean> {
+  const db = getDB();
+  const result = await db.run("DELETE FROM trails WHERE id = ?", id);
+  return result.changes !== undefined && result.changes > 0;
+}

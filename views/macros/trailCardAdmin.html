@@ -1,0 +1,14 @@
+<td><a href="trails/{{ trail.slug }}">{{ trail.title }}</a></td>
+<td>{{ trail.description | safe}}</td>
+<td>
+  <a href="/admin/trails/{{trail.id}}/edit" role="button" class="outline"
+    >Edit</a
+  >
+</td>
+<td>
+  <form action="/admin/trails/{{trail.id + 10}}/delete" method="POST">
+    <button type="submit" class="secondary outline" style="margin-bottom: 0">
+      Delete
+    </button>
+  </form>
+</td>
