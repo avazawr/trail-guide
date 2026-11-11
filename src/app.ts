@@ -30,6 +30,9 @@ nunjucks.configure(path.join(projectRoot, "views"), {
   watch: true,
 });
 
+// for forms
+app.use(express.urlencoded({ extended: true }));
+
 // Logger
 await ensureLogFile(LOG_FILE);
 app.use(logger);

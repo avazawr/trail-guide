@@ -57,3 +57,10 @@ article footer {
   overflow: hidden;
   padding-bottom: 20px;
 }
+
+.adminForm button,
+.adminForm a[role="button"] {
+  display: inline-block;
+  width: auto;
+  margin-right: 0.5rem;
+}
