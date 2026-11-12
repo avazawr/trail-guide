@@ -2,6 +2,9 @@ import { Router } from "express";
 import {
   getAllTrailsAPI,
   getTrailBySlugAPI,
+  createTrailAPI,
+  editTrailAPI,
+  deleteTrailAPI,
 } from "../controllers/apiTrailController";
 import {
   getRegionsAPI,
@@ -16,5 +19,11 @@ router.get("/trails/:slug", getTrailBySlugAPI);
 router.get("/regions", getRegionsAPI);
 
 router.get("/regions/:slug/trails", getTrailsByRegionAPI);
+
+router.post("/trails", createTrailAPI);
+
+router.post("/trails/:id", editTrailAPI);
+
+router.delete("/trails/:id", deleteTrailAPI);
 
 export default router;
