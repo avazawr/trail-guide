@@ -91,7 +91,7 @@ export const deleteTrailAPI = async (req: Request, res: Response) => {
   }
 
   const deleted = await deleteTrail(Number(id));
-  console.log(deleted);
+
   if (deleted) res.status(204).json({});
   else {
     res.status(404).json({ error: "Trail not found" });
