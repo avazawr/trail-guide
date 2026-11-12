@@ -8,6 +8,9 @@ import {
 } from "node:fs/promises";
 import path from "node:path";
 
+const LOG_DIR = path.join(process.cwd(), "logs");
+export const LOG_FILE = path.join(LOG_DIR, "access.log");
+
 //Creating a log file and checking existence
 async function fileExists(filePath: string): Promise<boolean> {
   try {
@@ -26,9 +29,6 @@ export async function ensureLogFile(filePath: string): Promise<void> {
     await writeFile(filePath, "", { encoding: "utf-8" });
   }
 }
-
-// TODO Double (app.ts S.18)!!!
-const LOG_FILE = path.join(process.cwd(), "logs", "access.log");
 
 async function addLogMessage(message: string): Promise<void> {
   await appendFile(LOG_FILE, message + "\n", { encoding: "utf-8" });

@@ -64,3 +64,7 @@ article footer {
   width: auto;
   margin-right: 0.5rem;
 }
+.error {
+  color: red;
+  display: block;
+}

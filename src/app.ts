@@ -4,7 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { closeDB, connectDB } from "./models/db";
 
-import { ensureLogFile, logger } from "./middleware/logger";
+import { ensureLogFile, logger, LOG_FILE } from "./middleware/logger";
 
 import websiteRouter from "./routes/websiteRoutes";
 import adminRouters from "./routes/adminRoutes";
@@ -13,10 +13,7 @@ import adminRouters from "./routes/adminRoutes";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, "..");
-const assetsDir = path.join(projectRoot, "src", "assets");
-// Logger
-const LOG_DIR = path.join(projectRoot, "logs");
-const LOG_FILE = path.join(LOG_DIR, "access.log");
+//const assetsDir = path.join(projectRoot, "src", "assets");
 
 const app = express();
 

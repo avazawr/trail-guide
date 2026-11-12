@@ -9,7 +9,7 @@ export function formattedData(data: number): string {
 // sanitize description
 import sanitizeHtml from "sanitize-html";
 
-export function sanitizeDescription(html: string): string {
+export function sanitize(html: string): string {
   return sanitizeHtml(html, {
     allowedTags: ["p", "strong", "em", "ul", "ol", "li", "a", "b", "i", "u"],
     allowedAttributes: {
