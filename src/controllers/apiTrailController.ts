@@ -3,11 +3,11 @@ import {
   getAllTrails,
   getTrailBySlug,
   addTrail,
-  type Trail,
   updateTrail,
   deleteTrail,
+  validateObjectAsTrailCreateObject,
 } from "../models/trailModel";
-import { formattedData, slugify } from "../controllers/util";
+import { formattedData } from "../controllers/util";
 
 // Get all Trails joined with regions
 export const getAllTrailsAPI = async (req: Request, res: Response) => {
@@ -42,29 +42,24 @@ export const getTrailBySlugAPI = async (
 
 // Write endpoints with an API key
 export const createTrailAPI = async (req: Request, res: Response) => {
-  // TODO validate req.body
+  // validate req.body
+  const { trail, error } = await validateObjectAsTrailCreateObject(req.body);
 
-  //     {
-  //     "region_id": 1,
-  //     "title": "new",
-  //     "difficulty": "easy",
-  //     "distance_km": 6667,
-  //     "description": "tyuyu",
-  //     "image_url": "tt"
-  //   }
-  const trail: Trail = req.body;
-  trail.slug = slugify(trail.title);
+  if (!trail) {
+    res.status(400).json({ error: error });
+    return;
+  }
+
   const updated = await addTrail(trail);
 
-  if (updated) res.status(200).json({ trail });
+  if (updated) res.status(200).json(trail);
   else {
     res.status(404).json({ error: "Trail not found" });
   }
 };
 
 export const editTrailAPI = async (req: Request, res: Response) => {
-  // TODO validate req.body
-
+  // validate req.body
   const id = req.params.id;
 
   if (!Number.isInteger(Number(id)) || Number(id) <= 0) {
@@ -72,11 +67,16 @@ export const editTrailAPI = async (req: Request, res: Response) => {
     return;
   }
 
-  const trail: Trail = req.body;
-  trail.slug = slugify(trail.title);
+  const { trail, error } = await validateObjectAsTrailCreateObject(req.body);
+
+  if (!trail) {
+    res.status(400).json({ error: error });
+    return;
+  }
+
   const updated = await updateTrail(Number(id), trail);
 
-  if (updated) res.status(200).json({ trail });
+  if (updated) res.status(200).json(trail);
   else {
     res.status(404).json({ error: "Trail not found" });
   }

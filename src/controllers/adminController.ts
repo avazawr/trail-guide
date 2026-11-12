@@ -6,6 +6,7 @@ import {
   deleteTrail,
   addTrail,
   updateTrail,
+  validateObjectAsTrailCreateObject,
 } from "../models/trailModel";
 import { sanitize, slugify } from "../controllers/util";
 import { getAllRegions } from "../models/regionModel";

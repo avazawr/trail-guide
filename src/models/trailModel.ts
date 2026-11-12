@@ -1,4 +1,6 @@
+import { sanitize, slugify } from "../controllers/util";
 import { getDB } from "./db";
+import { getRegion } from "./regionModel";
 
 export interface Trail {
   id: number;
@@ -18,6 +20,55 @@ export interface TrailWithRegion extends Trail {
 }
 
 export type TrailFormData = Partial<Trail>;
+export type TrailCreateObject = Omit<Trail, "id" | "slug" | "created_at">;
+
+export function isTrailCreateObject(
+  value: unknown,
+): value is TrailCreateObject {
+  if (typeof value !== "object" || value === null) return false;
+
+  const trail = value as Record<string, unknown>;
+
+  return (
+    Number.isInteger(trail.region_id) &&
+    typeof trail.title === "string" &&
+    ["easy", "moderate", "hard"].includes(trail.difficulty as string) &&
+    typeof trail.distance_km === "number" &&
+    (!("description" in trail) || typeof trail.description === "string") &&
+    (!("image_url" in trail) || typeof trail.image_url === "string")
+  );
+}
+
+export async function validateObjectAsTrailCreateObject(testObject: any) {
+  if (!isTrailCreateObject(testObject)) {
+    return { trail: null, error: "Invalid object format" };
+  }
+  const trailCreateObject: TrailCreateObject = testObject;
+
+  // check region_id
+  if (!(await getRegion(trailCreateObject.region_id))) {
+    return { trail: null, error: "Invalid region" };
+  }
+
+  const title = sanitize(trailCreateObject.title);
+  if (title === "") {
+    return { trail: null, error: "Invalid title" };
+  }
+
+  const trail = {
+    ...trailCreateObject,
+    title,
+    description: trailCreateObject.description
+      ? sanitize(trailCreateObject.description)
+      : undefined,
+    image_url: trailCreateObject.image_url
+      ? sanitize(trailCreateObject.image_url)
+      : undefined,
+    slug: slugify(title),
+  };
+
+  return { trail, error: null };
+}
 
 // Get all Trails joined with regions
 export async function getAllTrails(): Promise<TrailWithRegion[]> {
@@ -86,7 +137,9 @@ export async function deleteTrail(id: number): Promise<boolean> {
 }
 
 // Add new Trail
-export async function addTrail(data: Trail): Promise<boolean> {
+export async function addTrail(
+  data: Omit<Trail, "id" | "created_at">,
+): Promise<boolean> {
   const db = getDB();
 
   const result = await db.run(
@@ -126,7 +179,10 @@ export async function addTrail(data: Trail): Promise<boolean> {
 }
 
 // Edit Trail
-export async function updateTrail(id: number, data: Trail): Promise<boolean> {
+export async function updateTrail(
+  id: number,
+  data: Omit<Trail, "id" | "created_at">,
+): Promise<boolean> {
   const db = getDB();
 
   const result = await db.run(
