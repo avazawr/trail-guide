@@ -11,6 +11,7 @@ import {
   getTrailsByRegionAPI,
 } from "../controllers/apiRegionController";
 import { apiKey } from "../middleware/apiKey";
+import { limiting } from "../middleware/limiting";
 
 const router = Router();
 
@@ -22,6 +23,7 @@ router.get("/regions", getRegionsAPI);
 router.get("/regions/:slug/trails", getTrailsByRegionAPI);
 
 router.use(apiKey);
+router.use(limiting);
 router.post("/trails", createTrailAPI);
 
 router.post("/trails/:id", editTrailAPI);

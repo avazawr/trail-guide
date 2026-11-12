@@ -50,7 +50,12 @@ export const createTrailAPI = async (req: Request, res: Response) => {
     return;
   }
 
-  const updated = await addTrail(trail);
+  let updated: boolean = false;
+  try {
+    updated = await addTrail(trail);
+  } catch (err) {
+    res.status(400).json({ error: "Error in database" });
+  }
 
   if (updated) res.status(200).json(trail);
   else {
