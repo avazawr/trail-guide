@@ -8,6 +8,7 @@ import { ensureLogFile, logger, LOG_FILE } from "./middleware/logger";
 
 import websiteRouter from "./routes/websiteRoutes";
 import adminRouters from "./routes/adminRoutes";
+import apiRouters from "./routes/apiRoutes";
 
 // Define path
 const __filename = fileURLToPath(import.meta.url);
@@ -39,7 +40,7 @@ app.use("/", websiteRouter);
 // Admin routers
 app.use("/", adminRouters);
 // API routers
-//
+app.use("/api", apiRouters);
 
 // DB connection
 await connectDB();
